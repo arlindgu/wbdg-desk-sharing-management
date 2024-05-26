@@ -10,8 +10,6 @@
     <link rel="stylesheet" href="css/style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.7.2/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    <script src="js/main.js"></script>
-    <script src="js/user.js"></script>
     <script src="js/tables.js"></script>
 </head>
 
@@ -33,13 +31,6 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="reservations.html">My Reservations</a>
-                        <li class="nav-item">
-                            <a class="nav-link" href="profile.html">
-                                <span>My Profile</span>
-                                <span id="profileStatus" style="vertical-align: super;"></span> <!-- Kreis -->
-                                <span id="tooltipText" class="visually-hidden">Profile is incomplete</span> <!-- Tooltip-Text -->
-                            </a>
-                        </li>
                 </ul>
 
                 <div class="ms-3"> <!-- Add margin for separation -->
@@ -61,12 +52,84 @@
 <body>
     <div class="container">
         <div class="main-content">
-            <aside class="filter-section">
-            </aside>
+
+            <h1 class="text-center mt-4">Desk Overview</h1>
+
             <section class="desk-list">
+                
             </section>
+
         </div>
     </div>
+
+
+    <div class="form-popup" id="bookingForm">
+        <div class="form-container">
+            <h2 class="text-center">Booking Details</h2>
+            <form id="bookingDetailsForm" onsubmit="event.preventDefault(); getBookings();">
+                <div class="mb-3">
+                    <label for="deskId" class="form-label">Desk ID:</label>
+                    <input type="text" class="form-control" id="deskId" name="deskId" required>
+                </div>
+                <div class="mb-3">
+                    <label for="startDate" class="form-label">Start Date:</label>
+                    <input type="datetime-local" class="form-control" id="startDate" name="startDate" required>
+                </div>
+                <div class="mb-3">
+                    <label for="endDate" class="form-label">End Date:</label>
+                    <input type="datetime-local" class="form-control" id="endDate" name="endDate" required>
+                </div>
+                <div class="mb-3">
+                    <label for="studentId" class="form-label">Student ID:</label>
+                    <input type="text" class="form-control" id="studentId" name="studentId" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Get Bookings</button>
+                <button type="button" class="btn btn-secondary" onclick="closeBookingForm()">Cancel</button>
+                <hr> <!-- Divider -->
+                <p class="text-center"></p>Results</p>
+                <div id="bookingsContainer">
+                     <p>No bookings searched.</p>
+                </div>
+            </form>
+            <div class="overlay" id="overlay"></div>
+        </div>
+    </div>
+    
+    <div class="form-popup" id="bookDeskForm" style="display: none;">
+        <div class="form-container">
+            <h2 class="text-center">Book a Desk</h2>
+            <form id="bookDeskDetailsForm" onsubmit="event.preventDefault(); bookDesk();">
+                <div class="mb-3">
+                    <label for="bookDeskId" class="form-label">Desk ID:</label>
+                    <input type="text" class="form-control" id="bookDeskId" name="deskId" required>
+                </div>
+                <div class="mb-3">
+                    <label for="bookUserName" class="form-label">Name:</label>
+                    <input type="text" class="form-control" id="bookUserName" name="userName" required>
+                </div>
+                <div class="mb-3">
+                    <label for="bookUserEmail" class="form-label">Email:</label>
+                    <input type="email" class="form-control" id="bookUserEmail" name="userEmail" required>
+                </div>
+                <div class="mb-3">
+                    <label for="bookStartDate" class="form-label">Start Date:</label>
+                    <input type="datetime-local" class="form-control" id="bookStartDate" name="startDate" required>
+                </div>
+                <div class="mb-3">
+                    <label for="bookEndDate" class="form-label">End Date:</label>
+                    <input type="datetime-local" class="form-control" id="bookEndDate" name="endDate" required>
+                </div>
+                <div class="mb-3">
+                    <label for="bookStudentId" class="form-label">Student ID:</label>
+                    <input type="text" class="form-control" id="bookStudentId" name="studentId" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Book Desk</button>
+                <button type="button" class="btn btn-secondary" onclick="closeBookDeskForm()">Cancel</button>
+            </form>
+            <div class="overlay" id="overlay"></div>
+        </div>
+    </div>
+    
 </body>
 
 
