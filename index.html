@@ -11,6 +11,10 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.7.2/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <script src="js/tables.js"></script>
+    <script src="js/bookDesk.js"></script>
+    <script src="js/overviewDesk.js"></script>
+    <script src="js/bookingsDesk.js"></script>
+    <script src="js/misc.js"></script>
 </head>
 
 
@@ -62,7 +66,7 @@
         </div>
     </div>
 
-
+    <script>window.onload = insertDefaultValues;</script>
     <div class="form-popup" id="bookingForm">
         <div class="form-container">
             <h2 class="text-center">Booking Details</h2>
@@ -125,10 +129,19 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Book Desk</button>
                 <button type="button" class="btn btn-secondary" onclick="closeBookDeskForm()">Cancel</button>
+    
+                <div id="alert" class="alert alert-danger mt-3" style="display:none;"></div>
+                <div id="successMessage" class="text-center alert-success mt-3" style="display:none;">
+                    <a id="calendarLink" href="#" class="text-center btn-success" style="display:none;">Add to Calendar</a>
+                </div>
+    
             </form>
             <div class="overlay" id="overlay"></div>
         </div>
     </div>
+    
+    
+    
     
 </body>
 
