@@ -14,6 +14,7 @@
     <script src="js/misc.js"></script>
     <script src="js/bookDesk.js"></script>
     <script src="js/profile.js"></script>
+    <script src="js/inputValidator.js"></script>
 </head>
 
 
@@ -81,7 +82,8 @@
                     </div>
                     <div style="display: inline-block; margin-right: 10px;">
                         <label for="studentId" class="sr-only">Student ID</label>
-                        <input type="text" class="form-control mb-2" id="studentId" value="1234">
+                        <input type="text" class="form-control mb-2" id="studentId" value="1234" oninput="validateNumberInput()">
+                        <div id="studentIdError" class="invalid-feedback">Nur Zahlen sind erlaubt</div>
                     </div>
                     <div style="display: inline-block;">
                         <button type="button" class="btn btn-primary mb-2" onclick="searchDesks()">Suchen</button>
