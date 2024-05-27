@@ -1,10 +1,38 @@
+// Diese Funktion berechnet die Kosten basierend auf den Start- und Endzeiten sowie dem Preis pro Stunde
+function calculateCost(startDate, endDate, pricePerHour) {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const durationInHours = (end - start) / (1000 * 60 * 60);
+    return durationInHours * pricePerHour;
+}
+
+// Diese Funktion aktualisiert die Kostenanzeige in der Buchungsform
+function updateCostDisplay() {
+    const startDate = document.getElementById('startDate').value;
+    const endDate = document.getElementById('endDate').value;
+    const pricePerHourElement = document.getElementById('pricePerHour');
+    const costDisplayElement = document.getElementById('costDisplay');
+    
+    if (startDate && endDate && pricePerHourElement) {
+        const pricePerHour = parseFloat(pricePerHourElement.textContent);
+        const cost = calculateCost(startDate, endDate, pricePerHour);
+        
+        // Währung überprüfen
+        const currency = localStorage.getItem('currency') || 'CHF';
+        const exchangeRate = currency === 'EUR' ? parseFloat(localStorage.getItem('exchangeRate')) : 1;
+        const costInCurrency = (cost * exchangeRate).toFixed(2);
+
+        costDisplayElement.textContent = `Kosten: ${costInCurrency} ${currency}`;
+    }
+}
+
+
 function getBookings() {
     const deskId = document.getElementById('deskId').value;
     let startDate = document.getElementById('startDate').value;
     let endDate = document.getElementById('endDate').value;
     const studentId = document.getElementById('studentId').value;
 
-    // Stellen Sie sicher, dass die Sekunden hinzugefügt werden
     startDate = ensureSeconds(startDate);
     endDate = ensureSeconds(endDate);
 
@@ -21,15 +49,34 @@ function getBookings() {
             if (data) {
                 const bookings = JSON.parse(data);
                 displayBookings(bookings);
+                // Aktualisieren Sie den Preis pro Stunde und die Kostenanzeige
+                fetchDeskPrice(deskId);
             } else {
                 console.log('Keine Buchungen gefunden.');
                 displayBookings([]);
+                // Aktualisieren Sie den Preis pro Stunde und die Kostenanzeige
+                fetchDeskPrice(deskId);
             }
         })
         .catch(error => {
             console.error('Error fetching bookings:', error);
         });
 }
+
+function fetchDeskPrice(deskId) {
+    fetch('https://matthiasbaldauf.com/wbdg24/desks')
+        .then(response => response.json())
+        .then(desks => {
+            const desk = desks.find(d => d.id === deskId);
+            if (desk) {
+                const pricePerHourElement = document.getElementById('pricePerHour');
+                pricePerHourElement.textContent = desk.price;
+                updateCostDisplay();
+            }
+        })
+        .catch(error => console.error('Fehler beim Abrufen des Desk-Preises:', error));
+}
+
 
 function displayBookings(bookings) {
     const bookingsContainer = document.getElementById('bookingsContainer');
