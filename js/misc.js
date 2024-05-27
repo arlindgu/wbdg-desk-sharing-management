@@ -1,36 +1,73 @@
 function openBookingForm(deskId) {
     const profile = JSON.parse(localStorage.getItem('profile'));
-    document.getElementById('deskId').value = deskId;
-    document.getElementById('bookingForm').style.display = 'block';
+    const deskIdElement = document.getElementById('deskId');
+    const bookingForm = document.getElementById('bookingForm');
 
-    if (profile) {
+    if (deskIdElement) {
+        deskIdElement.value = deskId;
+    }
+    if (bookingForm) {
+        bookingForm.style.display = 'block';
+    }
+
+    if (profile && document.getElementById('studentId')) {
         document.getElementById('studentId').value = profile.studentId;
     }
 }
 
-
 function closeBookingForm() {
-    document.getElementById('bookingForm').style.display = 'none';
-    document.getElementById('overlay').style.display = 'none';
+    const bookingForm = document.getElementById('bookingForm');
+    const overlay = document.getElementById('overlay');
+
+    if (bookingForm) {
+        bookingForm.style.display = 'none';
+    }
+    if (overlay) {
+        overlay.style.display = 'none';
+    }
 }
 
 function openBookDeskForm() {
-    document.getElementById('bookDeskId').value = document.getElementById('deskId').value;
+    const deskIdElement = document.getElementById('deskId');
     const profile = JSON.parse(localStorage.getItem('profile'));
-    document.getElementById('bookStartDate').value = document.getElementById('startDate').value;
-    document.getElementById('bookEndDate').value = document.getElementById('endDate').value;
+    const bookDeskId = document.getElementById('bookDeskId');
+    const bookStartDate = document.getElementById('bookStartDate');
+    const bookEndDate = document.getElementById('bookEndDate');
+    const bookUserName = document.getElementById('bookUserName');
+    const bookUserEmail = document.getElementById('bookUserEmail');
+    const bookStudentId = document.getElementById('bookStudentId');
+    const bookDeskForm = document.getElementById('bookDeskForm');
 
-    if (profile) {
-        document.getElementById('bookUserName').value = profile.username;
-        document.getElementById('bookUserEmail').value = profile.email;
-        document.getElementById('bookStudentId').value = profile.studentId;
+    if (bookDeskId && deskIdElement) {
+        bookDeskId.value = deskIdElement.value;
     }
-
-    document.getElementById('bookDeskForm').style.display = 'block';
+    if (bookStartDate) {
+        bookStartDate.value = document.getElementById('startDate').value;
+    }
+    if (bookEndDate) {
+        bookEndDate.value = document.getElementById('endDate').value;
+    }
+    if (profile) {
+        if (bookUserName) {
+            bookUserName.value = profile.username;
+        }
+        if (bookUserEmail) {
+            bookUserEmail.value = profile.email;
+        }
+        if (bookStudentId) {
+            bookStudentId.value = profile.studentId;
+        }
+    }
+    if (bookDeskForm) {
+        bookDeskForm.style.display = 'block';
+    }
 }
 
 function closeBookDeskForm() {
-    document.getElementById('bookDeskForm').style.display = 'none'; // Neues Formular schließen
+    const bookDeskForm = document.getElementById('bookDeskForm');
+    if (bookDeskForm) {
+        bookDeskForm.style.display = 'none';
+    }
 }
 
 window.addEventListener('click', function(event) {
@@ -58,32 +95,19 @@ function roundToNextHalfHour(date) {
     return date;
 }
 
-// Heutiges Datum holen und auf die nächste halbe Stunde runden
-const today = new Date();
-const roundedToday = roundToNextHalfHour(today);
-
-// Startdatum setzen
-const startDateInput = document.getElementById('startDate');
-startDateInput.value = roundedToday.toISOString().slice(0, -8); // ISO-Format ohne Sekunden und Zeitzone
-
-// Enddatum setzen (+1 Stunde von Startdatum)
-const endDate = new Date(roundedToday);
-endDate.setHours(endDate.getHours() + 1);
-const endDateInput = document.getElementById('endDate');
-endDateInput.value = endDate.toISOString().slice(0, -8); // ISO-Format ohne Sekunden und Zeitzone
-
 function insertDefaultValues() {
-    // Heutiges Datum holen und auf die nächste halbe Stunde runden
     const today = new Date();
     const roundedToday = roundToNextHalfHour(today);
 
-    // Startdatum setzen
     const startDateInput = document.getElementById('startDate');
-    startDateInput.value = roundedToday.toISOString().slice(0, -8); // ISO-Format ohne Sekunden und Zeitzone
+    if (startDateInput) {
+        startDateInput.value = roundedToday.toISOString().slice(0, -8);
+    }
 
-    // Enddatum setzen (+1 Stunde von Startdatum)
     const endDate = new Date(roundedToday);
     endDate.setHours(endDate.getHours() + 1);
     const endDateInput = document.getElementById('endDate');
-    endDateInput.value = endDate.toISOString().slice(0, -8); // ISO-Format ohne Sekunden und Zeitzone
+    if (endDateInput) {
+        endDateInput.value = endDate.toISOString().slice(0, -8);
+    }
 }

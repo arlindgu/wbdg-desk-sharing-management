@@ -44,7 +44,10 @@ function fetchDesks() {
 
 function updateDeskList(desks) {
     const deskList = document.querySelector('.desk-list');
-    deskList.innerHTML = ''; // Löscht vorhandene Inhalte, falls welche vorhanden sind
+    if (!deskList) {
+        return; // Wenn das Element nicht existiert, brechen Sie die Funktion ab.
+    }
+    deskList.innerHTML = '';
 
     function addDesk(desk) {
         const isAvailable = desk.available === "1";
@@ -67,7 +70,7 @@ function updateDeskList(desks) {
                 <div class="desk-map pt-2 mb-2" style="height: 150px;"></div>
             </div>
         `;
-        
+
         deskList.appendChild(deskElement).classList.add('desk');
         addMapToDesk(deskElement, latitude, longitude, desk.id);
 
@@ -81,7 +84,6 @@ function updateDeskList(desks) {
         addDesk(desk);
     });
 
-    // Preise aktualisieren, falls EUR ausgewählt ist
     const savedCurrency = localStorage.getItem('currency') || 'CHF';
     if (savedCurrency === 'EUR') {
         updatePricesToEuro();

@@ -27,20 +27,33 @@ function loadProfile() {
     const profile = JSON.parse(localStorage.getItem('profile'));
 
     if (profile) {
-        document.getElementById('firstName').value = profile.firstName || '';
-        document.getElementById('lastName').value = profile.lastName || '';
-        document.getElementById('username').value = profile.username || '';
-        document.getElementById('email').value = profile.email || '';
-        document.getElementById('studentId').value = profile.studentId || '';
+        if (document.getElementById('firstName')) {
+            document.getElementById('firstName').value = profile.firstName || '';
+        }
+        if (document.getElementById('lastName')) {
+            document.getElementById('lastName').value = profile.lastName || '';
+        }
+        if (document.getElementById('username')) {
+            document.getElementById('username').value = profile.username || '';
+        }
+        if (document.getElementById('email')) {
+            document.getElementById('email').value = profile.email || '';
+        }
+        if (document.getElementById('studentId')) {
+            document.getElementById('studentId').value = profile.studentId || '';
+        }
     } else {
-        document.getElementById('profileForm').reset();
+        if (document.getElementById('profileForm')) {
+            document.getElementById('profileForm').reset();
+        }
     }
 }
 
 function resetProfile() {
     localStorage.removeItem('profile');
-    document.getElementById('profileForm').reset();
-    // Verzögerung hinzufügen, um sicherzustellen, dass das Profil entfernt wurde
+    if (document.getElementById('profileForm')) {
+        document.getElementById('profileForm').reset();
+    }
     setTimeout(checkProfileStatus, 100);
 }
 
@@ -49,8 +62,12 @@ function checkProfileStatus() {
     const profileNotification = document.getElementById('profileNotification');
 
     if (profile && profile.firstName && profile.lastName && profile.email && profile.studentId) {
-        profileNotification.style.display = 'none';
+        if (profileNotification) {
+            profileNotification.style.display = 'none';
+        }
     } else {
-        profileNotification.style.display = 'block';
+        if (profileNotification) {
+            profileNotification.style.display = 'block';
+        }
     }
 }
