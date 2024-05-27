@@ -186,10 +186,14 @@ function cancelBooking(event) {
             // Buchung erfolgreich gelöscht
             currentRow.innerHTML = '<td colspan="10">Deleted</td>'; // Leere die gesamte Zeile und zeige "Deleted" in der Mitte an
 
-            // Entferne die Zeile nach einer Verzögerung von 3 Sekunden
+            // Füge Fade-Out-Effekt hinzu
+            currentRow.style.transition = 'opacity 0.5s';
+            currentRow.style.opacity = '0';
+
+            // Entferne die Zeile nach einer Verzögerung von 0.5 Sekunden (entspricht der Transition-Dauer)
             setTimeout(() => {
                 currentRow.remove();
-            }, 1);
+            }, 500);
         } else {
             // Fehler beim Löschen der Buchung
             const overlay = document.createElement('div');

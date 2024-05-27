@@ -83,13 +83,17 @@ function displayBookings(bookings) {
     bookingsContainer.innerHTML = ''; // Leere das Container-Element
 
     if (bookings.length === 0) {
-        bookingsContainer.innerHTML = '<p>Keine Buchungen gefunden.</p>';
+        const noBookingsMessage = document.createElement('p');
+        noBookingsMessage.textContent = 'Keine Buchungen gefunden.';
+        noBookingsMessage.classList.add('text-center', 'my-3'); // Bootstrap-Klassen für zentrierten Text
+        bookingsContainer.appendChild(noBookingsMessage);
+
         console.log('keine buchungen gefunden');
-    
+
         // Bootstrap Button hinzufügen
         const button = document.createElement('button');
         button.textContent = 'Jetzt reservieren!';
-        button.classList.add('btn', 'btn-success'); // Bootstrap-Klassen für einen grünen Button
+        button.classList.add('btn', 'btn-success', 'd-block', 'mx-auto'); // Bootstrap-Klassen für einen grünen Button, zentriert
         button.addEventListener('click', function() {
             // Schließe das vorherige Formular
             closeBookingForm();
@@ -101,19 +105,47 @@ function displayBookings(bookings) {
         return;
     }
 
+    const table = document.createElement('table');
+    table.classList.add('table', 'table-striped'); // Bootstrap-Klassen für gestylte Tabelle
+    const thead = document.createElement('thead');
+    thead.innerHTML = `
+        <tr>
+            <th>ID</th>
+            <th>Desk ID</th>
+            <th>Start</th>
+            <th>End</th>
+            <th>Duration (hours)</th>
+            <th>User</th>
+            <th>Email</th>
+            <th>Student ID</th>
+        </tr>
+    `;
+    table.appendChild(thead);
+
+    const tbody = document.createElement('tbody');
     bookings.forEach(booking => {
-        const bookingElement = document.createElement('div');
-        bookingElement.innerHTML = `
-            <div class="booking">
-                <p><strong>ID:</strong> ${booking.id}</p>
-                <p><strong>Desk ID:</strong> ${booking.deskid}</p>
-                <p><strong>Start:</strong> ${booking.start}</p>
-                <p><strong>End:</strong> ${booking.end}</p>
-                <p><strong>User:</strong> ${booking.user}</p>
-                <p><strong>Email:</strong> ${booking.email}</p>
-                <p><strong>Student ID:</strong> ${booking.studid}</p>
-            </div>
+        const start = dayjs(booking.start);
+        const end = dayjs(booking.end);
+        const duration = end.diff(start, 'hour', true); // Dauer in Stunden (auch Bruchteile)
+
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${booking.id}</td>
+            <td>${booking.deskid}</td>
+            <td>${start.format('DD. MMMM YYYY HH:mm')}</td>
+            <td>${end.format('DD. MMMM YYYY HH:mm')}</td>
+            <td>${duration.toFixed(2)}</td>
+            <td>${booking.user}</td>
+            <td>${booking.email}</td>
+            <td>${booking.studid}</td>
         `;
-        bookingsContainer.appendChild(bookingElement);
+        tbody.appendChild(row);
     });
+    table.appendChild(tbody);
+
+    // Stil für Scrollbar hinzufügen
+    bookingsContainer.style.overflowY = 'auto';
+    bookingsContainer.style.maxHeight = '400px'; // Höhe anpassen, je nach Bedarf
+
+    bookingsContainer.appendChild(table);
 }

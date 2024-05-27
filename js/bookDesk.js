@@ -49,7 +49,23 @@ function bookDesk() {
     })
     .catch(error => {
         console.error('Fehler bei der Buchung:', error);
-        showError(error.message);
+
+        let errorMessage = 'Ein unbekannter Fehler ist aufgetreten.';
+
+        try {
+            // Versuche, die Fehlermeldung aus der Antwort zu extrahieren
+            const errorData = JSON.parse(error.message);
+            if (errorData.errorcode === 150) {
+                errorMessage = 'Der gewählte Zeitraum ist bereits reserviert!';
+            } else if (errorData.message) {
+                errorMessage = errorData.message;
+            }
+        } catch (e) {
+            // Falls das Parsen der Fehlermeldung fehlschlägt, zeige die ursprüngliche Fehlermeldung an
+            console.error('Fehler beim Parsen der Fehlermeldung:', e);
+        }
+
+        showError(errorMessage);
     });
 }
 
@@ -71,7 +87,7 @@ function showSuccess(data) {
 function showError(errorMessage) {
     const alert = document.getElementById('alert');
     alert.className = 'alert alert-danger mt-3';
-    alert.textContent = 'Fehler bei der Buchung: ' + errorMessage + '. Bitte versuchen Sie es später erneut.';
+    alert.textContent = 'Fehler bei der Buchung: ' + errorMessage + '';
     alert.style.display = 'block';
 
     const successMessage = document.getElementById('successMessage');
