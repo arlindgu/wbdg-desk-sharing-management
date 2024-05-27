@@ -11,15 +11,19 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.7.2/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <script src="js/bookDesk.js"></script>
+    <script src="js/profile.js"></script>
     <script src="js/overviewDesk.js"></script>
     <script src="js/bookingsDesk.js"></script>
     <script src="js/misc.js"></script>
     <script src="js/currency.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
 
 
 <header>
-
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
@@ -35,10 +39,12 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="reservations.html">My Reservations</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="profile.html">My Profile</a>
+                    </li>
                 </ul>
-
-                <div class="ms-3"> <!-- Add margin for separation -->
-                    <!-- Switch CHF / EUR -->
+                <div class="ms-3">
                     <div class="btn-group" role="group">
                         <input type="radio" class="btn-check" name="options-base" id="option5" autocomplete="off" checked>
                         <label class="btn btn-outline-primary" for="option5">CHF</label>
@@ -49,7 +55,9 @@
             </div>
         </div>
     </nav>
-
+    <div id="profileNotification" class="alert alert-warning text-center" style="display: none;">
+        Bitte zuerst Profil ausfüllen, um die Nutzererfahrung zu verbessern.
+    </div>
 </header>
 
 
@@ -107,6 +115,8 @@
         </div>
     </div>
 
+    <script>window.onload = function() { insertDefaultValues(); checkProfileStatus(); };</script>
+
     <div class="form-popup" id="bookDeskForm" style="display: none;">
         <div class="form-container">
             <h2 class="text-center">Book a Desk</h2>
@@ -151,10 +161,7 @@
     <p class="text-center text-secondary"> 2022 DSM - Desk Sharing Management</p>
 </footer>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
 </html>
 
     <div class="form-popup" id="bookDeskForm" style="display: none;">
@@ -209,10 +216,5 @@
     <p class="text-center text-secondary"> 2022 DSM - Desk Sharing Management</p>
 
 </footer>
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
 </html>

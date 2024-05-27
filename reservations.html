@@ -13,11 +13,11 @@
     <script src="js/filterDesk.js"></script>
     <script src="js/misc.js"></script>
     <script src="js/bookDesk.js"></script>
+    <script src="js/profile.js"></script>
 </head>
 
 
 <header>
-
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
@@ -33,10 +33,12 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="reservations.html">My Reservations</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="profile.html">My Profile</a>
+                    </li>
                 </ul>
-
-                <div class="ms-3"> <!-- Add margin for separation -->
-                    <!-- Switch CHF / EUR -->
+                <div class="ms-3">
                     <div class="btn-group" role="group">
                         <input type="radio" class="btn-check" name="options-base" id="option5" autocomplete="off" checked>
                         <label class="btn btn-outline-primary" for="option5">CHF</label>
@@ -47,8 +49,11 @@
             </div>
         </div>
     </nav>
-
+    <div id="profileNotification" class="alert alert-warning text-center" style="display: none;">
+        Bitte zuerst Profil ausfüllen, um die Nutzererfahrung zu verbessern.
+    </div>
 </header>
+<script>window.onload = checkProfileStatus;</script>
 
 
 <body>

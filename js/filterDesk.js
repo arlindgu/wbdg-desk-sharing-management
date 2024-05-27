@@ -1,6 +1,14 @@
 document.addEventListener('DOMContentLoaded', function() {
     fetchDesks();
+    loadStudentIdFromProfile();
 });
+
+function loadStudentIdFromProfile() {
+    const profile = JSON.parse(localStorage.getItem('profile'));
+    if (profile && profile.studentId) {
+        document.getElementById('studentId').value = profile.studentId;
+    }
+}
 
 function fetchDesks() {
     fetch('https://matthiasbaldauf.com/wbdg24/desks')

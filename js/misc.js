@@ -1,7 +1,13 @@
 function openBookingForm(deskId) {
+    const profile = JSON.parse(localStorage.getItem('profile'));
     document.getElementById('deskId').value = deskId;
     document.getElementById('bookingForm').style.display = 'block';
+
+    if (profile) {
+        document.getElementById('studentId').value = profile.studentId;
+    }
 }
+
 
 function closeBookingForm() {
     document.getElementById('bookingForm').style.display = 'none';
@@ -9,18 +15,20 @@ function closeBookingForm() {
 }
 
 function openBookDeskForm() {
-    // Übernehme die Parameter aus dem vorherigen Formular
     document.getElementById('bookDeskId').value = document.getElementById('deskId').value;
+    const profile = JSON.parse(localStorage.getItem('profile'));
     document.getElementById('bookStartDate').value = document.getElementById('startDate').value;
     document.getElementById('bookEndDate').value = document.getElementById('endDate').value;
-    document.getElementById('bookStudentId').value = document.getElementById('studentId').value;
 
-    // Setze Name und Email auf leere Felder oder Standardwerte
-    document.getElementById('bookUserName').value = '';
-    document.getElementById('bookUserEmail').value = '';
+    if (profile) {
+        document.getElementById('bookUserName').value = profile.username;
+        document.getElementById('bookUserEmail').value = profile.email;
+        document.getElementById('bookStudentId').value = profile.studentId;
+    }
 
-    document.getElementById('bookDeskForm').style.display = 'block'; // Neues Formular anzeigen
+    document.getElementById('bookDeskForm').style.display = 'block';
 }
+
 function closeBookDeskForm() {
     document.getElementById('bookDeskForm').style.display = 'none'; // Neues Formular schließen
 }
