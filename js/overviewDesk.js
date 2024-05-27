@@ -25,8 +25,14 @@ function addMapToDesk(deskElement, latitude, longitude, deskId) {
 
 
 document.addEventListener('DOMContentLoaded', () => {
+    const savedCurrency = localStorage.getItem('currency') || 'CHF';
+    if (savedCurrency === 'EUR') {
+        fetchExchangeRateOnce();
+    }
     fetchDesks();
 });
+
+
 
 function fetchDesks() {
     fetch('https://matthiasbaldauf.com/wbdg24/desks')
@@ -34,19 +40,20 @@ function fetchDesks() {
         .then(desks => updateDeskList(desks))
         .catch(error => console.error('Fehler beim Laden der Schreibtische:', error));
 }
+
+
 function updateDeskList(desks) {
     const deskList = document.querySelector('.desk-list');
     deskList.innerHTML = ''; // Löscht vorhandene Inhalte, falls welche vorhanden sind
 
-    // Funktion zum Hinzufügen eines Schreibtischs ohne Verzögerung
     function addDesk(desk) {
-        const isAvailable = desk.available === "1"; // Konvertiere die Verfügbarkeitszahl in einen booleschen Wert
-        const availabilityClass = isAvailable ? 'alert-success' : 'alert-danger'; // Klasse für den Verfügbarkeitsindikator
-        const latitude = parseFloat(desk.lat); // Konvertiere die Latitude in eine Gleitkommazahl
-        const longitude = parseFloat(desk.lon); // Konvertiere die Longitude in eine Gleitkommazahl
+        const isAvailable = desk.available === "1";
+        const availabilityClass = isAvailable ? 'alert-success' : 'alert-danger';
+        const latitude = parseFloat(desk.lat);
+        const longitude = parseFloat(desk.lon);
 
         const deskElement = document.createElement('div');
-        deskElement.className = 'desk card clickable'; // Bootstrap-Styling hinzugefügt und Klasse für anklickbare Kacheln
+        deskElement.className = 'desk card clickable';
         deskElement.innerHTML = `
             <div class="card-body">
                 <div class="availability-indicator alert ${availabilityClass}" role="alert">
@@ -55,25 +62,28 @@ function updateDeskList(desks) {
                 <h2 class="card-title">${desk.name}</h2>
                 <h6 class="card-subtitle text-body-secondary" id=${desk.id}>${desk.id}</h6>
                 <div class="col">${desk.address}</div>
-                <div class="col">${desk.price} CHF </div>
-                <div class="col">${desk.comment || '<i>keine Bemerkungen</i>'} </div>
+                <div class="col price">${desk.price} CHF</div>
+                <div class="col">${desk.comment || '<i>keine Bemerkungen</i>'}</div>
                 <div class="desk-map pt-2 mb-2" style="height: 150px;"></div>
             </div>
         `;
         
-        // Fügen Sie das Element mit der CSS-Klasse 'desk' hinzu
         deskList.appendChild(deskElement).classList.add('desk');
         addMapToDesk(deskElement, latitude, longitude, desk.id);
 
-        // Eventlistener für das Klicken auf die Karte hinzufügen
         deskElement.addEventListener('click', () => {
             console.log('Angeklickte Karte ID:', desk.id);
-            openBookingForm(desk.id); // Öffnet das Buchungsformular mit der deskId
+            openBookingForm(desk.id);
         });
     }
 
-    // Schleife durch die Schreibtische ohne Verzögerung zwischen den Iterationen
     desks.forEach(desk => {
         addDesk(desk);
     });
+
+    // Preise aktualisieren, falls EUR ausgewählt ist
+    const savedCurrency = localStorage.getItem('currency') || 'CHF';
+    if (savedCurrency === 'EUR') {
+        updatePricesToEuro();
+    }
 }
