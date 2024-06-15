@@ -55,7 +55,7 @@
         </div>
     </nav>
     <div id="profileNotification" class="alert alert-warning text-center" style="display: none;">
-        Bitte zuerst Profil ausfüllen, um die Nutzererfahrung zu verbessern.
+        To improve your user experience, complete your profile.
     </div>
 </header>
 
@@ -67,35 +67,35 @@
                 <div class="mb-3">
                     <label for="firstName" class="form-label">Vorname</label>
                     <input type="text" class="form-control" id="firstName" name="firstName" required oninput="validateLetterInput()">
-                    <div id="firstNameError" class="invalid-feedback">Nur Buchstaben sind erlaubt</div>
+                    <div id="firstNameError" class="invalid-feedback">Only letters are allowed</div>
                 </div>
                 <div class="mb-3">
                     <label for="lastName" class="form-label">Nachname</label>
                     <input type="text" class="form-control" id="lastName" name="lastName" required oninput="validateLetterInput()">
-                    <div id="lastNameError" class="invalid-feedback">Nur Buchstaben sind erlaubt</div>
+                    <div id="lastNameError" class="invalid-feedback">Only letters are allowed</div>
                 </div>
                 <div class="mb-3">
-                    <label for="username" class="form-label">Benutzername</label>
+                    <label for="username" class="form-label">Username</label>
                     <input type="text" class="form-control" id="username" name="username" disabled>
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
                     <input type="email" class="form-control" id="email" name="email" required oninput="validateEmailInput()">
-                    <div id="emailError" class="invalid-feedback">E-Mail muss ein '@' enthalten</div>
+                    <div id="emailError" class="invalid-feedback">E-mail must contain an '@'</div>
                 </div>
                 <div class="mb-3">
                     <label for="studentId" class="form-label">Student ID</label>
                     <input type="text" class="form-control" id="studentId" name="studentId" required oninput="validateNumberInput()">
-                    <div id="studentIdError" class="invalid-feedback">Nur Zahlen sind erlaubt</div>
+                    <div id="studentIdError" class="invalid-feedback">Only numbers are allowed</div>
                 </div>
-                <button type="submit" class="btn btn-primary">Speichern</button>
-                <button type="button" class="btn btn-secondary" onclick="resetProfile();">Zurücksetzen</button>
+                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-secondary" onclick="resetProfile();">Reset</button>
             </form>
         </div>
     </div>
     <script>window.onload = function() { loadProfile(); checkProfileStatus(); };</script>
 </body>
 <footer>
-    <p class="text-center text-secondary"> 2022 DSM - Desk Sharing Management</p>
+    <p class="text-center text-secondary">Copyright© 2024 DSM - Desk Sharing Management by Arlind Gurgurovci</p>
 </footer>
 </html>

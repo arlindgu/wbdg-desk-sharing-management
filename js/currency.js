@@ -38,7 +38,7 @@ function fetchExchangeRateOnce() {
                 localStorage.setItem('exchangeRate', exchangeRate);
                 updatePricesToEuro();
             })
-            .catch(error => console.error('Fehler beim Abrufen des Wechselkurses:', error));
+            .catch(error => console.error('Error when retrieving the exchange rate:', error));
     }
 }
 

@@ -22,7 +22,7 @@ function updateCostDisplay() {
         const exchangeRate = currency === 'EUR' ? parseFloat(localStorage.getItem('exchangeRate')) : 1;
         const costInCurrency = (cost * exchangeRate).toFixed(2);
 
-        costDisplayElement.textContent = `Kosten: ${costInCurrency} ${currency}`;
+        costDisplayElement.textContent = `Cost: ${costInCurrency} ${currency}`;
     }
 }
 
@@ -52,7 +52,7 @@ function getBookings() {
                 // Aktualisieren Sie den Preis pro Stunde und die Kostenanzeige
                 fetchDeskPrice(deskId);
             } else {
-                console.log('Keine Buchungen gefunden.');
+                console.log('No bookings found.');
                 displayBookings([]);
                 // Aktualisieren Sie den Preis pro Stunde und die Kostenanzeige
                 fetchDeskPrice(deskId);
@@ -74,7 +74,7 @@ function fetchDeskPrice(deskId) {
                 updateCostDisplay();
             }
         })
-        .catch(error => console.error('Fehler beim Abrufen des Desk-Preises:', error));
+        .catch(error => console.error('Error when retrieving the desk price:', error));
 }
 
 
@@ -84,15 +84,15 @@ function displayBookings(bookings) {
 
     if (bookings.length === 0) {
         const noBookingsMessage = document.createElement('p');
-        noBookingsMessage.textContent = 'Keine Buchungen gefunden.';
+        noBookingsMessage.textContent = 'No bookings found.';
         noBookingsMessage.classList.add('text-center', 'my-3'); // Bootstrap-Klassen für zentrierten Text
         bookingsContainer.appendChild(noBookingsMessage);
 
-        console.log('keine buchungen gefunden');
+        console.log('no bookings found');
 
         // Bootstrap Button hinzufügen
         const button = document.createElement('button');
-        button.textContent = 'Jetzt reservieren!';
+        button.textContent = 'Book now!';
         button.classList.add('btn', 'btn-success', 'd-block', 'mx-auto'); // Bootstrap-Klassen für einen grünen Button, zentriert
         button.addEventListener('click', function() {
             // Schließe das vorherige Formular

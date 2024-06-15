@@ -20,7 +20,7 @@ function saveProfile() {
 
     localStorage.setItem('profile', JSON.stringify(profile));
     checkProfileStatus();
-    alert('Profil gespeichert');
+    alert('Profile saved successfully!');
 }
 
 function loadProfile() {
@@ -50,11 +50,13 @@ function loadProfile() {
 }
 
 function resetProfile() {
+    
     localStorage.removeItem('profile');
     if (document.getElementById('profileForm')) {
         document.getElementById('profileForm').reset();
     }
     setTimeout(checkProfileStatus, 100);
+    alert('Profile reseted successfully!');
 }
 
 function checkProfileStatus() {

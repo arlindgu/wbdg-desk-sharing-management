@@ -38,7 +38,7 @@ function fetchDesks() {
     fetch('https://matthiasbaldauf.com/wbdg24/desks')
         .then(response => response.json())
         .then(desks => updateDeskList(desks))
-        .catch(error => console.error('Fehler beim Laden der Schreibtische:', error));
+        .catch(error => console.error('Error loading desks:', error));
 }
 
 
@@ -59,14 +59,12 @@ function updateDeskList(desks) {
         deskElement.className = 'desk card clickable';
         deskElement.innerHTML = `
             <div class="card-body">
-                <div class="availability-indicator alert ${availabilityClass}" role="alert">
-                    ${isAvailable ? 'Verfügbar' : 'Nicht Verfügbar'}
-                </div>
+            <div class="availability-indicator alert ${availabilityClass}" role="alert">${isAvailable ? 'Available' : 'Not Available'}</div>
                 <h2 class="card-title">${desk.name}</h2>
                 <h6 class="card-subtitle text-body-secondary" id=${desk.id}>${desk.id}</h6>
                 <div class="col">${desk.address}</div>
                 <div class="col price">${desk.price} CHF</div>
-                <div class="col">${desk.comment || '<i>keine Bemerkungen</i>'}</div>
+                <div class="col">${desk.comment || '<i>no comments</i>'}</div>
                 <div class="desk-map pt-2 mb-2" style="height: 150px;"></div>
             </div>
         `;
@@ -75,7 +73,7 @@ function updateDeskList(desks) {
         addMapToDesk(deskElement, latitude, longitude, desk.id);
 
         deskElement.addEventListener('click', () => {
-            console.log('Angeklickte Karte ID:', desk.id);
+            console.log('clicked desk card:', desk.id);
             openBookingForm(desk.id);
         });
     }

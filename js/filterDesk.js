@@ -18,11 +18,11 @@ function fetchDesks() {
             desks.forEach(desk => {
                 const option = document.createElement('option');
                 option.value = desk.id;
-                option.text = desk.id;
+                option.text = desk.id +" - " +desk.name;
                 dropdown.appendChild(option);
             });
         })
-        .catch(error => console.error('Fehler beim Laden der Schreibtische:', error));
+        .catch(error => console.error('Error when loading the desks:', error));
 }
 
 function searchDesks() {
@@ -52,7 +52,7 @@ function displayBookings(bookings) {
     // Prüfe, ob Buchungen vorhanden sind
     if (bookings.length === 0) {
         const noBookingsMessage = document.createElement('p');
-        noBookingsMessage.textContent = 'Für diesen Zeitraum mit den gesuchten Parametern gibt es keine Buchungen.';
+        noBookingsMessage.textContent = 'There are no bookings for this period with the searched parameters.';
         deskList.appendChild(noBookingsMessage);
     } else {
         const bookingsContainer = document.createElement('div');
@@ -139,7 +139,7 @@ function displayBookings(bookings) {
 
 
 function generateCalendarLinkFiltered(event) {
-    const currentRow = event.target.closest('tr'); // Finde die nächste Zeile, die das Ziel-Element (der geklickte Button) enthält
+    const currentRow = event.target.closest('tr'); // find the nearest element where the clicked button is included
 
     const deskId = document.getElementById('deskIdDropdown').value;
     const startDate = currentRow.querySelector('#bookingStart').textContent;

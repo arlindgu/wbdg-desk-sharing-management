@@ -39,7 +39,7 @@
 <header>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="index.html">
                 <img src="img/logo.svg" alt="Bootstrap" width="50" height="50">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,7 +48,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html#deskoverview">Desk Overview</a>
+                        <a class="nav-link" href="index.html">Desk Overview</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="reservations.html">My Reservations</a>
@@ -69,7 +69,7 @@
         </div>
     </nav>
     <div id="profileNotification" class="alert alert-warning text-center" style="display: none;">
-        Bitte zuerst Profil ausfüllen, um die Nutzererfahrung zu verbessern.
+        To improve your user experience, complete your profile.
     </div>
 </header>
     
@@ -85,16 +85,16 @@
 
             <h1 class="text-center mt-4">Desk Overview</h1>
             <div class="alert alert-primary" role="alert">
-                <h4 class="alert-heading">Hinweis!</h4>
-                <p>Benutzen Sie beim Startdatum immer Intervalle von 15 Minuten, und der Abstand zwischen Startdatum und Enddatum muss mindestens 30 Minuten betragen.</p>
+                <h4 class="alert-heading">Note!</h4>
+                <p>Always use intervals of 15 minutes for the start date, and the interval between the start date and end date must be at least 30 minutes.</p>
                 <hr>
                 <p class="mb-0">
-                    <strong>Gutes Beispiel:</strong><br>
-                    Startdatum: 2024-05-27 09:00<br>
-                    Enddatum: 2024-05-27 09:30<br>
-                    <strong>Schlechtes Beispiel:</strong><br>
-                    Startdatum: 2024-05-27 09:05 (nicht in 15-Minuten-Intervallen)<br>
-                    Enddatum: 2024-05-27 09:20 (Abstand weniger als 30 Minuten)
+                    <strong>A good example:</strong><br>
+                    Start date: 2024-05-27 09:00<br>
+                    End date: 2024-05-27 09:30<br>
+                    <strong>Bad example:</strong><br>
+                    Start date: 2024-05-27 09:05 (not in 15-minute intervals)<br>
+                    End date: 2024-05-27 09:20 (distance less than 30 minutes)
                 </p>
             </div>
 
@@ -131,7 +131,7 @@
                     <div class="mb-3">
                         <label for="studentId" class="form-label">Student ID:</label>
                         <input type="text" class="form-control" id="studentId" name="studentId" required oninput="validateNumberInput()">
-                        <div id="studentIdError" class="invalid-feedback">Nur Zahlen sind erlaubt</div>
+                        <div id="studentIdError" class="invalid-feedback">Only numbers are allowed</div>
                     </div>                
                     <div class="mb-3">
                         <label for="pricePerHour" class="form-label" style="display: none;"></label>
@@ -168,12 +168,12 @@
                 <div class="mb-3">
                     <label for="bookUserName" class="form-label">Name:</label>
                     <input type="text" class="form-control" id="bookUserName" name="userName" required oninput="validateLetterInput()">
-                    <div id="bookUserNameError" class="invalid-feedback">Nur Buchstaben sind erlaubt</div>
+                    <div id="bookUserNameError" class="invalid-feedback">Only letters are allowed</div>
                 </div>                
                 <div class="mb-3">
                     <label for="bookUserEmail" class="form-label">Email:</label>
                     <input type="email" class="form-control" id="bookUserEmail" name="userEmail" required oninput="validateEmailInput()">
-                    <div id="bookUserEmailError" class="invalid-feedback">E-Mail muss ein '@' enthalten</div>
+                    <div id="bookUserEmailError" class="invalid-feedback">E-mail must contain an '@'</div>
                 </div>                
                 <div class="mb-3">
                     <label for="bookStartDate" class="form-label">Start Date:</label>
@@ -186,7 +186,7 @@
                 <div class="mb-3">
                     <label for="bookStudentId" class="form-label">Student ID:</label>
                     <input type="text" class="form-control" id="bookStudentId" name="studentId" required oninput="validateNumberInput()">
-                    <div id="bookStudentIdError" class="invalid-feedback">Nur Zahlen sind erlaubt</div>
+                    <div id="bookStudentIdError" class="invalid-feedback">Only numbers are allowed</div>
                 </div>
                 
                 <button type="submit" class="btn btn-primary">Book Desk</button>
@@ -202,7 +202,7 @@
 </body>
 
 <footer>
-    <p class="text-center text-secondary"> 2022 DSM - Desk Sharing Management</p>
+    <p class="text-center text-secondary">Copyright© 2024 DSM - Desk Sharing Management by Arlind Gurgurovci</p>
 </footer>
 
 

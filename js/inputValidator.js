@@ -98,7 +98,7 @@ function validateForm(event) {
     validateEmailInput();
 
     if (document.querySelectorAll('.is-invalid').length === 0) {
-        alert('Formular erfolgreich abgesendet!');
+        alert('Form submitted successfully!');
     }
 }
 

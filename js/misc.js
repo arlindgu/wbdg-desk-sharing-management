@@ -78,10 +78,10 @@ window.addEventListener('click', function(event) {
 });
 
 function ensureSeconds(datetime) {
-    if (datetime.length === 16) { // YYYY-MM-DDTHH:MM
-        return `${datetime}:00`; // YYYY-MM-DDTHH:MM:00
+    if (datetime.length === 16) { // check if the value is 16 chars long.
+        return `${datetime}:00`; // if condition met, add :00 to the string and return it.
     }
-    return datetime; // Bereits im richtigen Format YYYY-MM-DDTHH:MM:SS
+    return datetime; // if not, the format is correct, return the value.
 }
 
 function roundToNextHalfHour(date) {

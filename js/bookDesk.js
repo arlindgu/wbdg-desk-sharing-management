@@ -11,7 +11,7 @@ function bookDesk() {
 
     // Ensure startDate is before endDate
     if (new Date(startDate) >= new Date(endDate)) {
-        showError('Enddatum muss nach dem Startdatum liegen.');
+        showError('End date must be after the start date.');
         return;
     }
 
@@ -44,25 +44,25 @@ function bookDesk() {
         return response.json();
     })
     .then(data => {
-        console.log('Buchung erfolgreich:', data);
+        console.log('Booking successful:', data);
         showSuccess(data);
     })
     .catch(error => {
-        console.error('Fehler bei der Buchung:', error);
+        console.error('Booking error:', error);
 
-        let errorMessage = 'Ein unbekannter Fehler ist aufgetreten.';
+        let errorMessage = 'An unknown error has occurred.';
 
         try {
             // Versuche, die Fehlermeldung aus der Antwort zu extrahieren
             const errorData = JSON.parse(error.message);
             if (errorData.errorcode === 150) {
-                errorMessage = 'Der gewählte Zeitraum ist bereits reserviert!';
+                errorMessage = 'The selected period is already reserved!';
             } else if (errorData.message) {
                 errorMessage = errorData.message;
             }
         } catch (e) {
             // Falls das Parsen der Fehlermeldung fehlschlägt, zeige die ursprüngliche Fehlermeldung an
-            console.error('Fehler beim Parsen der Fehlermeldung:', e);
+            console.error('Error parsing the error message:', e);
         }
 
         showError(errorMessage);
@@ -72,7 +72,7 @@ function bookDesk() {
 function showSuccess(data) {
     const alert = document.getElementById('alert');
     alert.className = 'alert alert-success mt-3';
-    alert.textContent = 'Buchung erfolgreich!';
+    alert.textContent = 'Booking successful!';
     alert.style.display = 'block';
 
     const successMessage = document.getElementById('successMessage');
@@ -87,7 +87,7 @@ function showSuccess(data) {
 function showError(errorMessage) {
     const alert = document.getElementById('alert');
     alert.className = 'alert alert-danger mt-3';
-    alert.textContent = 'Fehler bei der Buchung: ' + errorMessage + '';
+    alert.textContent = 'Booking error: ' + errorMessage + '';
     alert.style.display = 'block';
 
     const successMessage = document.getElementById('successMessage');
