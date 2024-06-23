@@ -1,5 +1,6 @@
 function addMapToDesk(deskElement, latitude, longitude, deskId) {
-    var mapId = `map-${deskId}`; // Stelle sicher, dass `deskId` eindeutig und korrekt ist
+    // Adds a map to the desk element with the given latitude, longitude, and desk ID
+    var mapId = `map-${deskId}`; 
     var mapContainer = document.createElement('div');
     mapContainer.id = mapId;
     mapContainer.style.height = '150px';
@@ -7,24 +8,23 @@ function addMapToDesk(deskElement, latitude, longitude, deskId) {
 
     var map = L.map(mapId);
     var marker = L.marker([latitude, longitude]);
-    var group = new L.featureGroup([marker]); // Gruppe von Markern erstellen
+    var group = new L.featureGroup([marker]); 
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 18
     }).addTo(map);
 
-    map.fitBounds(group.getBounds()); // Karte an Markergruppe anpassen
-    map.addLayer(group); // Markergruppe zur Karte hinzufügen
-    marker.addTo(map); // Marker zur Karte hinzufügen
+    map.fitBounds(group.getBounds()); 
+    map.addLayer(group); 
+    marker.addTo(map); 
 
-    // Unterdrücken des Klickereignisses auf der Karte
     mapContainer.addEventListener('click', (e) => {
         e.stopPropagation();
     });
 }
 
-
 document.addEventListener('DOMContentLoaded', () => {
+    // Executes when the DOM content has been loaded
     const savedCurrency = localStorage.getItem('currency') || 'CHF';
     if (savedCurrency === 'EUR') {
         fetchExchangeRateOnce();
@@ -32,24 +32,24 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchDesks();
 });
 
-
-
 function fetchDesks() {
+    // Fetches the desks data from the specified URL
     fetch('https://matthiasbaldauf.com/wbdg24/desks')
         .then(response => response.json())
         .then(desks => updateDeskList(desks))
         .catch(error => console.error('Error loading desks:', error));
 }
 
-
 function updateDeskList(desks) {
+    // Updates the desk list with the provided desks data
     const deskList = document.querySelector('.desk-list');
     if (!deskList) {
-        return; // Wenn das Element nicht existiert, brechen Sie die Funktion ab.
+        return; 
     }
     deskList.innerHTML = '';
 
     function addDesk(desk) {
+        // Adds a desk element to the desk list with the provided desk data
         const isAvailable = desk.available === "1";
         const availabilityClass = isAvailable ? 'alert-success' : 'alert-danger';
         const latitude = parseFloat(desk.lat);
@@ -59,7 +59,7 @@ function updateDeskList(desks) {
         deskElement.className = 'desk card clickable';
         deskElement.innerHTML = `
             <div class="card-body">
-            <div class="availability-indicator alert ${availabilityClass}" role="alert">${isAvailable ? 'Available' : 'Not Available'}</div>
+                <div class="availability-indicator alert ${availabilityClass}" role="alert">${isAvailable ? 'Available' : 'Not Available'}</div>
                 <h2 class="card-title">${desk.name}</h2>
                 <h6 class="card-subtitle text-body-secondary" id=${desk.id}>${desk.id}</h6>
                 <div class="col">${desk.address}</div>

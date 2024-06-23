@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     loadStudentIdFromProfile();
 });
 
+// load student ID from profile and fill the input field
 function loadStudentIdFromProfile() {
     const profile = JSON.parse(localStorage.getItem('profile'));
     if (profile && profile.studentId) {
@@ -10,6 +11,7 @@ function loadStudentIdFromProfile() {
     }
 }
 
+// gets desks from the server and fill the dropdown
 function fetchDesks() {
     fetch('https://matthiasbaldauf.com/wbdg24/desks')
         .then(response => response.json())
@@ -18,13 +20,14 @@ function fetchDesks() {
             desks.forEach(desk => {
                 const option = document.createElement('option');
                 option.value = desk.id;
-                option.text = desk.id +" - " +desk.name;
+                option.text = desk.id + " - " + desk.name;
                 dropdown.appendChild(option);
             });
         })
         .catch(error => console.error('Error when loading the desks:', error));
 }
 
+// search for bookings based on selected filters
 function searchDesks() {
     const deskId = document.getElementById('deskIdDropdown').value;
     const startDate = document.getElementById('startDate').value;
@@ -43,13 +46,11 @@ function searchDesks() {
         });
 }
 
-
-
+// show the bookings in a table
 function displayBookings(bookings) {
     const deskList = document.querySelector('.results');
-    deskList.innerHTML = ''; // Clear existing content
+    deskList.innerHTML = '';
 
-    // Prüfe, ob Buchungen vorhanden sind
     if (bookings.length === 0) {
         const noBookingsMessage = document.createElement('p');
         noBookingsMessage.textContent = 'There are no bookings for this period with the searched parameters.';
@@ -78,42 +79,41 @@ function displayBookings(bookings) {
         bookings.forEach(booking => {
             const row = document.createElement('tr');
 
-            // Erstelle die Zellen für jede Buchung
             const cellId = document.createElement('td');
             cellId.textContent = booking.id;
-            cellId.setAttribute('id', 'bookingId'); // ID für die Buchungs-ID
+            cellId.setAttribute('id', 'bookingId');
             row.appendChild(cellId);
 
             const cellStart = document.createElement('td');
             cellStart.textContent = booking.start;
-            cellStart.setAttribute('id', 'bookingStart'); // ID für den Startzeitpunkt
+            cellStart.setAttribute('id', 'bookingStart');
             row.appendChild(cellStart);
 
             const cellEnd = document.createElement('td');
             cellEnd.textContent = booking.end;
-            cellEnd.setAttribute('id', 'bookingEnd'); // ID für den Endzeitpunkt
+            cellEnd.setAttribute('id', 'bookingEnd');
             row.appendChild(cellEnd);
 
             const cellUser = document.createElement('td');
             cellUser.textContent = booking.user;
-            cellUser.setAttribute('id', 'bookingUser'); // ID für den Benutzer
+            cellUser.setAttribute('id', 'bookingUser');
             row.appendChild(cellUser);
 
             const cellEmail = document.createElement('td');
             cellEmail.textContent = booking.email;
-            cellEmail.setAttribute('id', 'bookingEmail'); // ID für die E-Mail
+            cellEmail.setAttribute('id', 'bookingEmail');
             row.appendChild(cellEmail);
 
             const cellStudentId = document.createElement('td');
             cellStudentId.textContent = booking.studid;
-            cellStudentId.setAttribute('id', 'bookingStudentId'); // ID für die Studenten-ID
+            cellStudentId.setAttribute('id', 'bookingStudentId');
             row.appendChild(cellStudentId);
 
             const cellButton1 = document.createElement('td');
             const button1 = document.createElement('button');
             button1.className = 'btn btn-success';
             button1.textContent = 'Generate ICS-Link';
-            button1.setAttribute('id', 'button1'); // ID für Button 1
+            button1.setAttribute('id', 'button1');
             cellButton1.appendChild(button1);
             row.appendChild(cellButton1);
             cellButton1.onclick = generateCalendarLinkFiltered;
@@ -122,7 +122,7 @@ function displayBookings(bookings) {
             const button2 = document.createElement('button');
             button2.className = 'btn btn-danger';
             button2.textContent = 'Cancel Booking';
-            button2.setAttribute('id', 'button2'); // ID für Button 2
+            button2.setAttribute('id', 'button2');
             cellButton2.appendChild(button2);
             row.appendChild(cellButton2);
             cellButton2.onclick = cancelBooking;
@@ -137,9 +137,9 @@ function displayBookings(bookings) {
     }
 }
 
-
+// generate a calendar link for the selected booking
 function generateCalendarLinkFiltered(event) {
-    const currentRow = event.target.closest('tr'); // find the nearest element where the clicked button is included
+    const currentRow = event.target.closest('tr');
 
     const deskId = document.getElementById('deskIdDropdown').value;
     const startDate = currentRow.querySelector('#bookingStart').textContent;
@@ -147,7 +147,7 @@ function generateCalendarLinkFiltered(event) {
 
     const baseUrl = 'https://calndr.link/d/event/?';
     const params = new URLSearchParams({
-        service: 'apple',  // Apple service
+        service: 'apple',
         start: formatDateToISO(startDate),
         end: formatDateToISO(endDate),
         title: `Desk Reservation ${deskId}`
@@ -155,22 +155,22 @@ function generateCalendarLinkFiltered(event) {
 
     const calendarLink = baseUrl + params.toString();
 
-    // Öffne den Link in einem neuen Tab
     window.open(calendarLink, '_blank');
 }
 
+// Format a date string to ISO format
 function formatDateToISO(dateString) {
     const date = new Date(dateString);
     const isoString = date.toISOString();
     return isoString;
 }
 
+// Cancel booking
 function cancelBooking(event) {
-    const currentRow = event.target.closest('tr'); // Finde die nächste Zeile, die das Ziel-Element (der geklickte Button) enthält
+    const currentRow = event.target.closest('tr');
 
-    const bookingId = currentRow.querySelector('#bookingId').textContent; // ID der Buchung in der aktuellen Zeile
-    const studentId = currentRow.querySelector('#bookingStudentId').textContent; // Studenten-ID in der aktuellen Zeile
-
+    const bookingId = currentRow.querySelector('#bookingId').textContent;
+    const studentId = currentRow.querySelector('#bookingStudentId').textContent;
     const url = 'https://matthiasbaldauf.com/wbdg24/booking';
     const params = new URLSearchParams({
         id: bookingId,
@@ -181,23 +181,36 @@ function cancelBooking(event) {
         method: 'DELETE',
         body: params
     })
-    .then(response => {
-        if (response.ok) {
-            // Buchung erfolgreich gelöscht
-            currentRow.innerHTML = '<td colspan="10">Deleted</td>'; // Leere die gesamte Zeile und zeige "Deleted" in der Mitte an
+        .then(response => {
+            if (response.ok) {
+                currentRow.innerHTML = '<td colspan="10">Deleted</td>';
 
-            // Füge Fade-Out-Effekt hinzu
-            currentRow.style.transition = 'opacity 0.5s';
-            currentRow.style.opacity = '0';
+                currentRow.style.transition = 'opacity 0.5s';
+                currentRow.style.opacity = '0';
 
-            // Entferne die Zeile nach einer Verzögerung von 0.5 Sekunden (entspricht der Transition-Dauer)
-            setTimeout(() => {
-                currentRow.remove();
-            }, 500);
-        } else {
-            // Fehler beim Löschen der Buchung
+                setTimeout(() => {
+                    currentRow.remove();
+                }, 500);
+            } else {
+                const overlay = document.createElement('div');
+                overlay.textContent = 'Failed to cancel booking!';
+                overlay.style.position = 'absolute';
+                overlay.style.top = '50%';
+                overlay.style.left = '50%';
+                overlay.style.transform = 'translate(-50%, -50%)';
+                overlay.style.backgroundColor = 'rgba(255, 0, 0, 0.5)';
+                overlay.style.color = 'white';
+                overlay.style.padding = '10px';
+                document.body.appendChild(overlay);
+                setTimeout(() => {
+                    overlay.remove();
+                }, 3000);
+            }
+        })
+        .catch(error => {
+            console.error('Error cancelling booking:', error);
             const overlay = document.createElement('div');
-            overlay.textContent = 'Failed to cancel booking!';
+            overlay.textContent = 'An error occurred!';
             overlay.style.position = 'absolute';
             overlay.style.top = '50%';
             overlay.style.left = '50%';
@@ -207,25 +220,7 @@ function cancelBooking(event) {
             overlay.style.padding = '10px';
             document.body.appendChild(overlay);
             setTimeout(() => {
-                overlay.remove(); // Entferne das Fehler-Overlay nach 3 Sekunden
+                overlay.remove();
             }, 3000);
-        }
-    })
-    .catch(error => {
-        // Fehler beim Ausführen der DELETE-Anfrage
-        console.error('Error cancelling booking:', error);
-        const overlay = document.createElement('div');
-        overlay.textContent = 'An error occurred!';
-        overlay.style.position = 'absolute';
-        overlay.style.top = '50%';
-        overlay.style.left = '50%';
-        overlay.style.transform = 'translate(-50%, -50%)';
-        overlay.style.backgroundColor = 'rgba(255, 0, 0, 0.5)';
-        overlay.style.color = 'white';
-        overlay.style.padding = '10px';
-        document.body.appendChild(overlay);
-        setTimeout(() => {
-            overlay.remove(); // Entferne das Fehler-Overlay nach 3 Sekunden
-        }, 3000);
-    });
+        });
 }

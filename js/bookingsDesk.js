@@ -1,13 +1,13 @@
-// Diese Funktion berechnet die Kosten basierend auf den Start- und Endzeiten sowie dem Preis pro Stunde
 function calculateCost(startDate, endDate, pricePerHour) {
+    // Calculates the cost of a booking based on the difference in hours from start date and end date times price per hour
     const start = new Date(startDate);
     const end = new Date(endDate);
     const durationInHours = (end - start) / (1000 * 60 * 60);
     return durationInHours * pricePerHour;
 }
 
-// Diese Funktion aktualisiert die Kostenanzeige in der Buchungsform
 function updateCostDisplay() {
+    // Updates the cost display
     const startDate = document.getElementById('startDate').value;
     const endDate = document.getElementById('endDate').value;
     const pricePerHourElement = document.getElementById('pricePerHour');
@@ -17,7 +17,6 @@ function updateCostDisplay() {
         const pricePerHour = parseFloat(pricePerHourElement.textContent);
         const cost = calculateCost(startDate, endDate, pricePerHour);
         
-        // Währung überprüfen
         const currency = localStorage.getItem('currency') || 'CHF';
         const exchangeRate = currency === 'EUR' ? parseFloat(localStorage.getItem('exchangeRate')) : 1;
         const costInCurrency = (cost * exchangeRate).toFixed(2);
@@ -26,8 +25,8 @@ function updateCostDisplay() {
     }
 }
 
-
 function getBookings() {
+    // Gets bookings from the server based on the infos provided in the form
     const deskId = document.getElementById('deskId').value;
     let startDate = document.getElementById('startDate').value;
     let endDate = document.getElementById('endDate').value;
@@ -49,12 +48,10 @@ function getBookings() {
             if (data) {
                 const bookings = JSON.parse(data);
                 displayBookings(bookings);
-                // Aktualisieren Sie den Preis pro Stunde und die Kostenanzeige
                 fetchDeskPrice(deskId);
             } else {
                 console.log('No bookings found.');
                 displayBookings([]);
-                // Aktualisieren Sie den Preis pro Stunde und die Kostenanzeige
                 fetchDeskPrice(deskId);
             }
         })
@@ -64,6 +61,7 @@ function getBookings() {
 }
 
 function fetchDeskPrice(deskId) {
+    // gets the price per hour for a specific desk from the server and updates the price
     fetch('https://matthiasbaldauf.com/wbdg24/desks')
         .then(response => response.json())
         .then(desks => {
@@ -77,27 +75,24 @@ function fetchDeskPrice(deskId) {
         .catch(error => console.error('Error when retrieving the desk price:', error));
 }
 
-
 function displayBookings(bookings) {
+    // Displays the bookings in a table format
     const bookingsContainer = document.getElementById('bookingsContainer');
-    bookingsContainer.innerHTML = ''; // Leere das Container-Element
+    bookingsContainer.innerHTML = '';
 
     if (bookings.length === 0) {
         const noBookingsMessage = document.createElement('p');
         noBookingsMessage.textContent = 'No bookings found.';
-        noBookingsMessage.classList.add('text-center', 'my-3'); // Bootstrap-Klassen für zentrierten Text
+        noBookingsMessage.classList.add('text-center', 'my-3');
         bookingsContainer.appendChild(noBookingsMessage);
 
         console.log('no bookings found');
 
-        // Bootstrap Button hinzufügen
         const button = document.createElement('button');
         button.textContent = 'Book now!';
-        button.classList.add('btn', 'btn-success', 'd-block', 'mx-auto'); // Bootstrap-Klassen für einen grünen Button, zentriert
+        button.classList.add('btn', 'btn-success', 'd-block', 'mx-auto');
         button.addEventListener('click', function() {
-            // Schließe das vorherige Formular
             closeBookingForm();
-            // Öffne das neue Formular
             openBookDeskForm();
         });
 
@@ -106,7 +101,7 @@ function displayBookings(bookings) {
     }
 
     const table = document.createElement('table');
-    table.classList.add('table', 'table-striped'); // Bootstrap-Klassen für gestylte Tabelle
+    table.classList.add('table', 'table-striped');
     const thead = document.createElement('thead');
     thead.innerHTML = `
         <tr>
@@ -126,7 +121,7 @@ function displayBookings(bookings) {
     bookings.forEach(booking => {
         const start = dayjs(booking.start);
         const end = dayjs(booking.end);
-        const duration = end.diff(start, 'hour', true); // Dauer in Stunden (auch Bruchteile)
+        const duration = end.diff(start, 'hour', true);
 
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -143,9 +138,8 @@ function displayBookings(bookings) {
     });
     table.appendChild(tbody);
 
-    // Stil für Scrollbar hinzufügen
     bookingsContainer.style.overflowY = 'auto';
-    bookingsContainer.style.maxHeight = '400px'; // Höhe anpassen, je nach Bedarf
+    bookingsContainer.style.maxHeight = '400px'; 
 
     bookingsContainer.appendChild(table);
 }

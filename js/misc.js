@@ -1,4 +1,5 @@
 function openBookingForm(deskId) {
+    // gets the user profile from local storage
     const profile = JSON.parse(localStorage.getItem('profile'));
     const deskIdElement = document.getElementById('deskId');
     const bookingForm = document.getElementById('bookingForm');
@@ -11,6 +12,7 @@ function openBookingForm(deskId) {
     }
 
     if (profile && document.getElementById('studentId')) {
+        // sets the student ID value in the booking form if the profile exists
         document.getElementById('studentId').value = profile.studentId;
     }
 }
@@ -20,9 +22,11 @@ function closeBookingForm() {
     const overlay = document.getElementById('overlay');
 
     if (bookingForm) {
+        // Hides the booking form
         bookingForm.style.display = 'none';
     }
     if (overlay) {
+        // Hides the overlay
         overlay.style.display = 'none';
     }
 }
@@ -39,26 +43,33 @@ function openBookDeskForm() {
     const bookDeskForm = document.getElementById('bookDeskForm');
 
     if (bookDeskId && deskIdElement) {
+        // sets the desk ID value in the book desk form
         bookDeskId.value = deskIdElement.value;
     }
     if (bookStartDate) {
+        // sets the start date value in the book desk form
         bookStartDate.value = document.getElementById('startDate').value;
     }
     if (bookEndDate) {
+        // sets the end date value in the book desk form
         bookEndDate.value = document.getElementById('endDate').value;
     }
     if (profile) {
         if (bookUserName) {
+            // sets the username value in the book desk form if the profile exists
             bookUserName.value = profile.username;
         }
         if (bookUserEmail) {
+            // sets the email value in the book desk form if the profile exists
             bookUserEmail.value = profile.email;
         }
         if (bookStudentId) {
+            // sets the student ID value in the book desk form if the profile exists
             bookStudentId.value = profile.studentId;
         }
     }
     if (bookDeskForm) {
+        // show the book desk form
         bookDeskForm.style.display = 'block';
     }
 }
@@ -66,6 +77,7 @@ function openBookDeskForm() {
 function closeBookDeskForm() {
     const bookDeskForm = document.getElementById('bookDeskForm');
     if (bookDeskForm) {
+        // Hides the book desk form
         bookDeskForm.style.display = 'none';
     }
 }
@@ -73,20 +85,23 @@ function closeBookDeskForm() {
 window.addEventListener('click', function(event) {
     const bookingForm = document.getElementById('bookingForm');
     if (event.target === bookingForm) {
+        // Hides the booking form when clicked outside of it
         bookingForm.style.display = 'none';
     }
 });
 
 function ensureSeconds(datetime) {
-    if (datetime.length === 16) { // check if the value is 16 chars long.
-        return `${datetime}:00`; // if condition met, add :00 to the string and return it.
+    if (datetime.length === 16) {
+        // Adds seconds to the datetime string if it is 16 characters long
+        return `${datetime}:00`;
     }
-    return datetime; // if not, the format is correct, return the value.
+    return datetime;
 }
 
 function roundToNextHalfHour(date) {
     const minutes = date.getMinutes();
     if (minutes < 30) {
+        // Rounds the date to the next half hour
         date.setMinutes(30);
     } else {
         date.setHours(date.getHours() + 1);
@@ -101,6 +116,7 @@ function insertDefaultValues() {
 
     const startDateInput = document.getElementById('startDate');
     if (startDateInput) {
+        // Sets the start date input value to the rounded current date and time
         startDateInput.value = roundedToday.toISOString().slice(0, -8);
     }
 
@@ -108,6 +124,7 @@ function insertDefaultValues() {
     endDate.setHours(endDate.getHours() + 1);
     const endDateInput = document.getElementById('endDate');
     if (endDateInput) {
+        // Sets the end date input value to the rounded current date and time plus 1 hour
         endDateInput.value = endDate.toISOString().slice(0, -8);
     }
 }

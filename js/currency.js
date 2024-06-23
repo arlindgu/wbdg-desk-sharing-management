@@ -1,10 +1,9 @@
-let exchangeRate = 1; // Standardmäßig 1 für CHF
+let exchangeRate = 1;
 
 document.addEventListener('DOMContentLoaded', () => {
     const chfButton = document.getElementById('option5');
     const eurButton = document.getElementById('option6');
 
-    // Laden der gespeicherten Währung
     const savedCurrency = localStorage.getItem('currency') || 'CHF';
     if (savedCurrency === 'EUR') {
         eurButton.checked = true;
@@ -13,7 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
         chfButton.checked = true;
     }
 
-    // Event Listener zum Speichern der Währung und Neuladen der Seite
     chfButton.addEventListener('change', () => {
         localStorage.setItem('currency', 'CHF');
         location.reload();
@@ -25,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+// gets the exchange rate from CHF to EUR once and stores it in local storage
 function fetchExchangeRateOnce() {
     const savedRate = localStorage.getItem('exchangeRate');
     if (savedRate) {
@@ -42,6 +41,7 @@ function fetchExchangeRateOnce() {
     }
 }
 
+// updates the prices on the page to EUR based on the current exchange rate
 function updatePricesToEuro() {
     const prices = document.querySelectorAll('.desk .price');
     prices.forEach(priceElement => {

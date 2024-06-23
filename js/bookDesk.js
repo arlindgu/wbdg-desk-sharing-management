@@ -1,4 +1,5 @@
 function bookDesk() {
+    // Get input values
     const deskId = document.getElementById('bookDeskId').value;
     const userName = document.getElementById('bookUserName').value;
     const userEmail = document.getElementById('bookUserEmail').value;
@@ -6,6 +7,7 @@ function bookDesk() {
     let endDate = document.getElementById('bookEndDate').value;
     const studentId = document.getElementById('bookStudentId').value;
 
+    // Ensure start and end dates have seconds
     startDate = ensureSeconds(startDate);
     endDate = ensureSeconds(endDate);
 
@@ -53,7 +55,6 @@ function bookDesk() {
         let errorMessage = 'An unknown error has occurred.';
 
         try {
-            // Versuche, die Fehlermeldung aus der Antwort zu extrahieren
             const errorData = JSON.parse(error.message);
             if (errorData.errorcode === 150) {
                 errorMessage = 'The selected period is already reserved!';
@@ -61,7 +62,6 @@ function bookDesk() {
                 errorMessage = errorData.message;
             }
         } catch (e) {
-            // Falls das Parsen der Fehlermeldung fehlschlägt, zeige die ursprüngliche Fehlermeldung an
             console.error('Error parsing the error message:', e);
         }
 
@@ -69,6 +69,7 @@ function bookDesk() {
     });
 }
 
+// Show success message and generate calendar link
 function showSuccess(data) {
     const alert = document.getElementById('alert');
     alert.className = 'alert alert-success mt-3';
@@ -84,6 +85,7 @@ function showSuccess(data) {
     calendarLinkElement.style.display = 'inline';
 }
 
+// Show error message
 function showError(errorMessage) {
     const alert = document.getElementById('alert');
     alert.className = 'alert alert-danger mt-3';
@@ -94,6 +96,7 @@ function showError(errorMessage) {
     successMessage.style.display = 'none';
 }
 
+// Generate calendar link based on deatils of the desk reservation
 function generateCalendarLink() {
     const deskId = document.getElementById('bookDeskId').value;
     const startDate = document.getElementById('bookStartDate').value;
@@ -102,7 +105,7 @@ function generateCalendarLink() {
     const baseUrl = 'https://calndr.link/d/event/?';
     console.log(startDate, endDate)
     const params = new URLSearchParams({
-        service: 'apple',  // Apple service
+        service: 'apple',
         start: formatDateISO(startDate),
         end: formatDateISO(endDate),
         title: `Desk Reservation ${deskId}`
@@ -112,11 +115,13 @@ function generateCalendarLink() {
     return baseUrl + params.toString();
 }
 
+// Format date to ISO format without milliseconds
 function formatDateISO(dateTime) {
     const date = new Date(dateTime);
-    return date.toISOString().split('.')[0] + 'Z';  // Ensure ISO format without milliseconds
+    return date.toISOString().split('.')[0] + 'Z';
 }
 
+// Close the book desk form
 function closeBookDeskForm() {
     document.getElementById('bookDeskForm').style.display = 'none';
 }
