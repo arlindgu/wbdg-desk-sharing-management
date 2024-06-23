@@ -1,37 +1,38 @@
-/* Container für die Schreibtische */
+/* Container for desks */
 .desk-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
 }
 
 .desk {
-    flex: 1 1 300px; /* Flexible Größe, mindestens 300px breit */
-    border-radius: 8px;
-    overflow: hidden;
-    display: inline-block;
-    margin: 0 0.5rem;
-    cursor: pointer; /* Ändere den Cursor, um anzuzeigen, dass das Element klickbar ist */
+  flex: 1 1 300px; /* Flexible size, minimum 300px wide */
+  border-radius: 8px;
+  overflow: hidden;
+  display: inline-block;
+  margin: 0 0.5rem;
+  cursor: pointer; /* Change the cursor to indicate that the element is clickable */
 }
 
 .desk:hover {
-    background-color: #f0f0f0; /* Ändere die Hintergrundfarbe beim Hovern */
+  background-color: #f0f0f0; /* Change the background color on hover */
 }
   
-  .form-container {
-    max-width: 1500px;
-    min-width: 1250px;
-    padding: 20px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  }
-  .form-popup {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 10001;
-  }
+.form-container {
+  max-width: 1500px;
+  min-width: 1250px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.form-popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10001;
+}
